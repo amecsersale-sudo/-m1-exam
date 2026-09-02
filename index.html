@@ -541,8 +541,12 @@ function printExamSet(){
  const n=Math.min(Math.max(1,parseInt(document.getElementById('cfg-count').value)||30),pool.length);
  if(document.getElementById('cfg-shuffle-q').checked)pool=shuffle(pool);pool=pool.slice(0,n).map(q=>({...q,options:document.getElementById('cfg-shuffle-opt').checked?shuffle(q.options):q.options.slice()}));
  const qhtml=pool.map((q,i)=>'<div class="q"><b>'+(i+1)+'. '+esc(q.q)+'</b><ol type="A">'+q.options.map(o=>'<li>'+esc(o)+'</li>').join('')+'</ol></div>').join('');
- const key=pool.map((q,i)=>(i+1)+'. '+String.fromCharCode(65,q.options.indexOf(q.answer))).join(' &nbsp; ');
- openPrintWindow('ข้อสอบคณิตศาสตร์เตรียมเข้า ม.1','<h1>ข้อสอบคณิตศาสตร์เตรียมเข้า ม.1</h1><p>จำนวน '+n+' ข้อ</p>'+qhtml+'<div class="page"><h2>เฉลย</h2><p>'+key+'</p></div>');
+ const key=pool.map((q,i)=>{
+  const idx=q.options.indexOf(q.answer);
+  const letter=idx>=0?String.fromCharCode(65+idx):'?';
+  return '<div class="answer"><b>'+(i+1)+'. '+letter+'. '+esc(q.answer)+'</b><div class="solution">วิธีคิด: '+esc(q.solution)+'</div></div>';
+ }).join('');
+ openPrintWindow('ข้อสอบคณิตศาสตร์เตรียมเข้า ม.1','<h1>ข้อสอบคณิตศาสตร์เตรียมเข้า ม.1</h1><p>จำนวน '+n+' ข้อ</p>'+qhtml+'<div class="page"><h2>เฉลยพร้อมวิธีคิด</h2>'+key+'</div>');
 }
 function printLatestReport(){
  const rr=window.__RESULTS__||[];if(!rr.length){alert('ยังไม่มีผลล่าสุด');return}
@@ -551,7 +555,7 @@ function printLatestReport(){
 }
 function openPrintWindow(title,body){
  const w=window.open('','_blank');if(!w){alert('เบราว์เซอร์บล็อกหน้าต่างพิมพ์ กรุณาอนุญาต Pop-up');return}
- w.document.write('<!doctype html><html lang="th"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>body{font-family:Arial,sans-serif;max-width:850px;margin:30px auto;line-height:1.55;color:#111}.q{margin:0 0 22px;break-inside:avoid}li{margin:5px 0}.page{page-break-before:always}@media print{button{display:none}}</style></head><body>'+body+'<p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button></p></body></html>');w.document.close();
+ w.document.write('<!doctype html><html lang="th"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>body{font-family:Arial,sans-serif;max-width:850px;margin:30px auto;line-height:1.55;color:#111}.q{margin:0 0 22px;break-inside:avoid}li{margin:5px 0}.page{page-break-before:always}.answer{margin:0 0 16px;break-inside:avoid}.solution{margin-top:4px;color:#333}@media print{button{display:none}}</style></head><body>'+body+'<p><button onclick="window.print()">พิมพ์ / บันทึกเป็น PDF</button></p></body></html>');w.document.close();
  setTimeout(()=>{try{w.focus();w.print()}catch(e){}},350);
 }
 
