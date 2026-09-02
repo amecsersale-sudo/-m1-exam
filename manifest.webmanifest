@@ -1,5 +1,5 @@
 {
-  "name": "ระบบจำลองสอบเข้า ม.1",
+  "name": "ระบบจำลองสอบเข้า ม.1 V3",
   "short_name": "ข้อสอบ ม.1",
   "start_url": "./",
   "scope": "./",
@@ -7,8 +7,17 @@
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
   "lang": "th",
+  "description": "ระบบสอบจริง ฝึกพร้อมเฉลย ทบทวนข้อผิด ประวัติและวิเคราะห์พัฒนาการ",
   "icons": [
-    {"src":"icon-192.png","sizes":"192x192","type":"image/png"},
-    {"src":"icon-512.png","sizes":"512x512","type":"image/png"}
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
